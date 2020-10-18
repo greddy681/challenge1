@@ -1,0 +1,44 @@
+#Challenge #3
+#We have a nested object, we would like a function that you pass in the object and a key and get back the value. How this is implemented is up to you.
+# Use single ' quote in objects NOT double quotes "
+obj1 = {'a':{'b':{'c':'d'}}}
+nkey1 = "a/b/c"
+obj2 = {'x':{'y':{'z':'a'}}}
+nkey2 = "x/y/z"
+obj3 = {'a':'c','x':{'y':{'z':'a'}}}
+obj4 = {'a':'c','x':{'y':{'z':'a'}},'d':'trick'}
+badkey = "x/y/q"
+nkey3 = "x"
+nkey4 = "x/y"
+nkey5 = "d"
+badkey6 = "a/x/y"
+
+
+def findvalue(nestedkey, object):
+  keys = nestedkey.split("/")  
+  for key in keys:
+      lastkeyfound = ""
+      # If not we test if the object is a dictionory and interate
+      if not isinstance(object, dict):
+        break
+      for k,v in object.items():
+        # Found the key
+        if key == k:
+            lastkeyfound = key
+            object = v
+            break
+      # If the last key found in our object is the last key in our list, we return the object
+      if keys[len(keys) - 1] == lastkeyfound:
+        return object
+      # If not we test if the object is a dictionory and interate
+      #if not isinstance(object, dict):
+       # break
+  # If control reaches here, which means we failed to find our target key.
+  raise ValueError('Key not found') 
+ 
+
+try:
+    value = findvalue(badkey6, obj4)
+    print(value)
+except ValueError as err:
+    print(err.args)
